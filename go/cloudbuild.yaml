@@ -9,4 +9,5 @@ steps:
   env: ['GOPATH=/workspace/go']
 - name: 'docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/go_server', '.']
+  dir: 'go'
 images: [gcr.io/$PROJECT_ID/go_server]
