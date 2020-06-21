@@ -1,6 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/go'
-  args: ['install', 'go_server']
+  args: ['generate']
+  env: ['PROJECT_PATH=src/go_server']
 
 # steps:
 # - dir: 'go/src'
