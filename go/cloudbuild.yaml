@@ -5,6 +5,7 @@ steps:
 - name: 'golang'
   entrypoint: 'go'
   args: ['install', 'go_server']
+  env: ['PROJECT_ROOT=src/go_server']
 # - name: 'gcr.io/cloud-builders/go'
 #   args: ['test', 'go_server']
 #   env: ['PROJECT_ROOT=src/go_server']
