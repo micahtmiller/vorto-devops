@@ -4,8 +4,10 @@ steps:
 #   args: ['go', 'mod', 'init', 'src/go_server']
 - name: 'golang'
   entrypoint: 'go'
-  args: ['test', '.']
   dir: 'src/go_server'
+  args: ['build', '-o', '/go/bin/go_server', 'main.go']
+- name: 'busybox'
+  args: ['ls', '-l', '/go/bin']
 #   env: ['PROJECT_ROOT=src/go_server']
 # - name: 'gcr.io/cloud-builders/go'
 #   args: ['test', 'go_server']
