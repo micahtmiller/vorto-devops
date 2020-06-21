@@ -1,5 +1,5 @@
 steps:
-- dir: 'go/src'
+# - dir: 'go/src'
 - name: 'gcr.io/cloud-builders/go'
   args: ['install', 'go_server']
 - name: 'gcr.io/cloud-builders/go'
