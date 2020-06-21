@@ -3,9 +3,11 @@ steps:
 # - name: 'golang'
 #   args: ['go', 'mod', 'init', 'src/go_server']
 - name: 'golang'
-  entrypoint: 'go'
-  args: ['install', 'go_server']
-  env: ['GOPATH=/workspace']
+  args: ['ls', '-lah']
+# - name: 'golang'
+#   entrypoint: 'go'
+#   args: ['install', 'go_server']
+#   env: ['GOPATH=/workspace']
 # - name: 'busybox'
 #   args: ['ls', '-l', '/go/bin']
 #   env: ['PROJECT_ROOT=src/go_server']
