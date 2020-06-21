@@ -2,8 +2,10 @@ steps:
 # - dir: 'go/src'
 - name: 'gcr.io/cloud-builders/go'
   args: ['install', 'go_server']
+  dir: 'src/go_server'
 - name: 'gcr.io/cloud-builders/go'
   args: ['test', 'go_server']
+  dir: 'src/go_server'
 # - name: 'gcr.io/cloud-builders/docker'
 #     args: ['build', '-t', 'gcr.io/$PROJECT_ID/go_server', '.']
 # - name: 'gcr.io/cloud-builders/docker'
