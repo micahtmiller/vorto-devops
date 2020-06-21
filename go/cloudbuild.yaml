@@ -7,14 +7,6 @@ steps:
   entrypoint: 'go'
   args: ['test', 'go_server']
   env: ['GOPATH=/workspace/go']
-# - name: 'busybox'
-#   args: ['ls', '-l', '/go/bin']
-#   env: ['PROJECT_ROOT=src/go_server']
-# - name: 'gcr.io/cloud-builders/go'
-#   args: ['test', 'go_server']
-#   env: ['PROJECT_ROOT=src/go_server']
-# - name: 'gcr.io/cloud-builders/docker'
-#     args: ['build', '-t', 'gcr.io/$PROJECT_ID/go_server', '.']
-# - name: 'gcr.io/cloud-builders/docker'
-#     args: ['run', 'gcr.io/$PROJECT_ID/go_server']
-# images: [gcr.io/$PROJECT_ID/go_server]
+- name: 'docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/go_server', '.']
+images: [gcr.io/$PROJECT_ID/go_server]
