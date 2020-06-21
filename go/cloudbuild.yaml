@@ -4,8 +4,8 @@ steps:
 #   args: ['go', 'mod', 'init', 'src/go_server']
 - name: 'golang'
   entrypoint: 'go'
-  dir: 'src/go_server'
-  args: ['build', '-o', '/go/bin/go_server', 'main.go']
+  args: ['install', 'go_server']
+  env: ['GOPATH=.']
 - name: 'busybox'
   args: ['ls', '-l', '/go/bin']
 #   env: ['PROJECT_ROOT=src/go_server']
