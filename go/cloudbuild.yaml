@@ -1,15 +1,11 @@
 steps:
-# - name: 'gcr.io/cloud-builders/go'
-#   args: ['install', 'go_server']
-#   env: ['GOPATH=/workspace/go']
-
-# steps:
-# - dir: 'go/src'
-# - name: 'golang'
-#   args: ['go', 'mod', 'init', 'src/go_server']
 - name: 'golang'
   entrypoint: 'go'
   args: ['install', 'go_server']
+  env: ['GOPATH=/workspace/go']
+- name: 'golang'
+  entrypoint: 'go'
+  args: ['test', 'go_server']
   env: ['GOPATH=/workspace/go']
 # - name: 'busybox'
 #   args: ['ls', '-l', '/go/bin']
