@@ -1,10 +1,10 @@
 FROM golang:1.14
 
-ENV GOBIN=$GOPATH/bin
+WORKDIR /go/src/go_server
 
-ADD src/go_server /go/src/go_server
+COPY src/go_server .
 RUN go install go_server
 
-ENTRYPOINT /go/bin/go_server
+CMD [ "go_server" ]
 
 EXPOSE 8080
