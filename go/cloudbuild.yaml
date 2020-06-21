@@ -2,12 +2,15 @@ steps:
 # - dir: 'go/src'
 # - name: 'golang'
 #   args: ['go', 'mod', 'init', 'src/go_server']
-- name: 'golang'
-  entrypoint: 'go'
-  args: ['install', 'go_server']
-  env: ['GOPATH=.']
 - name: 'busybox'
-  args: ['ls', '-l', '/go/bin']
+  args: ['ls', '-l']
+# - name: 'golang'
+#   entrypoint: 'go'
+#   args: ['install', 'go_server']
+#   env: ['GOPATH=.']
+#   dir: 'src/go_server'
+# - name: 'busybox'
+#   args: ['ls', '-l', '/go/bin']
 #   env: ['PROJECT_ROOT=src/go_server']
 # - name: 'gcr.io/cloud-builders/go'
 #   args: ['test', 'go_server']
