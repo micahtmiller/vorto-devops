@@ -18,4 +18,3 @@
 * Create go program
     * Query database
     * Map objects for response
-* 
