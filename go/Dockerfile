@@ -4,6 +4,7 @@ WORKDIR /go/src/go_server
 
 COPY src/go_server .
 RUN go install go_server
+# test change
 
 CMD [ "go_server" ]
 
