@@ -55,51 +55,56 @@ module "gke" {
   ]
 }
 
-resource "kubernetes_pod" "goserver" {
-    metadata {
-        name = "goserver"
+# resource "kubernetes_pod" "goserver" {
+#     metadata {
+#         name = "goserver"
 
-        labels = {
-            app = "goserver"
-        }
-    }
+#         labels = {
+#             app = "goserver"
+#         }
+#     }
 
-    spec {
-        container {
-            image = "gcr.io/sandbox-mtm/go_server:latest"
-            name = "goserver"
-        }
-    }
+#     spec {
+#         container {
+#             image = "gcr.io/sandbox-mtm/go_server:latest"
+#             name = "goserver"
+#         }
+#     }
 
-    depends_on = [module.gke]
-}
+#     depends_on = [module.gke]
+# }
 
-resource "kubernetes_service" "goserver-service" {
-    metadata {
-        name = "goserver-service"
-    }
+# resource "kubernetes_service" "goserver-service" {
+#     metadata {
+#         name = "goserver-service"
+#     }
 
-    spec {
-        selector = {
-            app = kubernetes_pod.goserver.metadata[0].labels.app
-        }
+#     spec {
+#         selector = {
+#             app = kubernetes_pod.goserver.metadata[0].labels.app
+#         }
 
-        session_affinity = "ClientIP"
+#         session_affinity = "ClientIP"
 
-        port {
-            port        = 80
-            target_port = 8080
-        }
+#         port {
+#             port        = 80
+#             target_port = 8080
+#         }
 
-        type = "LoadBalancer"
-    }
+#         type = "LoadBalancer"
+#     }
 
-    depends_on = [module.gke]
-}
+#     depends_on = [module.gke]
+# }
 
 module "gke_service_account" {
     source = "./modules/gke-service-account"
     project = var.project_id
     name = var.compute_engine_service_account
     description = "Service account for K8s VMs"
+}
+
+resource "helm_release" "local" {
+    name = "go-server"
+    chart = "./helm/goserver"
 }

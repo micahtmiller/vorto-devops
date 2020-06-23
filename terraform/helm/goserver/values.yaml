@@ -38,8 +38,8 @@ securityContext: {}
 
 service:
   name: goserver
-  type: ClusterIP
-  externalPort: 8080
+  type: LoadBalancer
+  externalPort: 80
   internalPort: 8080
 
 ingress:
