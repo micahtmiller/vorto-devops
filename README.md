@@ -7,7 +7,7 @@
 * Initialize
     * Create GCP project (done)
     * Configure VS Code for Go (done)
-    * Configure cloud_sql_proxy locally for Postgres
+    * Configure cloud_sql_proxy locally for Postgres (done)
 
 * Go Server
     * Develop hello world (done)
@@ -36,8 +36,9 @@
             * cloud_sql_proxy
             * go_server
         * Database
-            * Postgres
-* Load data manually to Postgres
+            * Postgres (done - not in terraform)
+* Load data manually to Postgres (done)
+* Explore data and create SQL query (done)
 * Create go program
     * Getting started with go (done)
     * Query database
