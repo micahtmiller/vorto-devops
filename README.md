@@ -31,7 +31,7 @@
 
 * Create infrastructure
     * Terraform
-        * K8s
+        * K8s (done)
         * Helm
             * cloud_sql_proxy
             * go_server

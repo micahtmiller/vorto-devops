@@ -23,3 +23,10 @@ kubectl apply -f nginx-deployment.yaml
 
 ```
 docker run -d --rm --name test -p 8080:8080 gcr.io/sandbox-mtm/go_server:latest
+```
+
+# Configure kubectl for deployed K8 instance
+
+```
+gcloud container clusters get-credentials deploy-service-cluster --region us-central1
+```
