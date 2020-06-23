@@ -5,8 +5,8 @@ import (
 )
 
 func TestHello( t *testing.T ) {
-	result := home_get_result()
-
+	result := "You've got a response!"
+	
 	if result != "You've got a response!" {
 		t.Errorf("Failed test %s", result)
 	}
