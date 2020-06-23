@@ -1,0 +1,6 @@
+{
+    "dockerFile": "Dockerfile.terraform",
+    "extensions": [ 
+       "hashicorp.terraform" 
+    ]
+}

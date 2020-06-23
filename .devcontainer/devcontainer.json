@@ -1,6 +1,9 @@
 {
-    "dockerFile": "Dockerfile.terraform",
+    "dockerFile": "Dockerfile.go",
+    "appPort": [
+        "8080:8080"
+    ],
     "extensions": [ 
-       "hashicorp.terraform" 
+       "golang.go" 
     ]
-}
+ }
