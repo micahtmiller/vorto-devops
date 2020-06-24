@@ -55,48 +55,6 @@ module "gke" {
   ]
 }
 
-# resource "kubernetes_pod" "goserver" {
-#     metadata {
-#         name = "goserver"
-
-#         labels = {
-#             app = "goserver"
-#         }
-#     }
-
-#     spec {
-#         container {
-#             image = "gcr.io/sandbox-mtm/go_server:latest"
-#             name = "goserver"
-#         }
-#     }
-
-#     depends_on = [module.gke]
-# }
-
-# resource "kubernetes_service" "goserver-service" {
-#     metadata {
-#         name = "goserver-service"
-#     }
-
-#     spec {
-#         selector = {
-#             app = kubernetes_pod.goserver.metadata[0].labels.app
-#         }
-
-#         session_affinity = "ClientIP"
-
-#         port {
-#             port        = 80
-#             target_port = 8080
-#         }
-
-#         type = "LoadBalancer"
-#     }
-
-#     depends_on = [module.gke]
-# }
-
 module "gke_service_account" {
     source = "./modules/gke-service-account"
     project = var.project_id
@@ -107,4 +65,26 @@ module "gke_service_account" {
 resource "helm_release" "local" {
     name = "go-server"
     chart = "./helm/goserver"
+}
+
+module "cloud_sql" {
+    source = "./modules/cloudsql"
+    name = "vorto"
+    database_version = "POSTGRES_12"
+    region = var.region
+    tier = "db-f1-micro"
+    sql_user = var.sql_user
+    sql_pwd = var.sql_pwd
+}
+
+resource "google_sql_database_instance" "vortosql" {
+  name             = "vorto"
+  database_version = "POSTGRES_12"
+  region           = "us-central1"
+
+  settings {
+    # Second-generation instance tiers are based on the machine
+    # type. See argument reference below.
+    tier = "db-f1-micro"
+  }
 }

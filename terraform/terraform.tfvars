@@ -1,8 +1,0 @@
-project_id = "sandbox-mtm"
-region = "us-central1"
-cluster_name_suffix = ""
-compute_engine_service_account = "vorto-kubernetes"
-network = "default"
-subnetwork = "default"
-ip_range_pods = ""
-ip_range_services = ""
