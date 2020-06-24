@@ -24,7 +24,7 @@
         * Configure service (done)
         * Configure ingress
     * Terraform
-        * Create cluster
+        * Create cluster (done)
         * Deploy helm chart
 
 # Create solution
@@ -32,14 +32,14 @@
 * Create infrastructure
     * Terraform
         * K8s (done)
-        * Helm
+        * Helm (not complete)
             * cloud_sql_proxy
             * go_server
-        * Database
-            * Postgres (done - not in terraform)
+        * Database (done)
+            * Postgres
 * Load data manually to Postgres (done)
 * Explore data and create SQL query (done)
 * Create go program
     * Getting started with go (done)
-    * Query database
-    * Map objects for response
+    * Query database (done)
+    * Map objects for response (done)

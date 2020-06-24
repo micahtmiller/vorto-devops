@@ -29,5 +29,5 @@ docker run -p 80:80 \
 
 ## Manual connection test
 ```
-psql "dbname=public host=localhost user=xxxx password=xxxx port=5432 sslmode=disable"
+psql "dbname=public host=localhost user=postgres password=postgres port=5432 sslmode=disable"
 ```

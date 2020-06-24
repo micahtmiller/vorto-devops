@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: goserver
+spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: goserver
+    template:
+      metadata:
+        labels:
+          app: goserver
+      spec:
+        containers:
+        - name: goserver
+          image: gcr.io/sandbox-mtm/go_server:v0.2
+        # This app listens on port 8080 for web traffic by default.
+          ports:
+          - containerPort: 8080
+          env:
+          - name: PORT
+            value: "8080"
+          - name: DATABASE_URL
+            valueFrom:
+                secretKeyRef:
+                    name: goserver-secret
+                    key: uri
+        - name: cloud-sql-proxy
+        # It is recommended to use the latest version of the Cloud SQL proxy
+        # Make sure to update on a regular schedule!
+          image: gcr.io/cloudsql-docker/gce-proxy:1.17
+          command:
+            - "/cloud_sql_proxy"
+
+            # If connecting from a VPC-native GKE cluster, you can use the
+            # following flag to have the proxy connect over private IP
+            # - "-ip_address_types=PRIVATE"
+
+            # Replace DB_PORT with the port the proxy should listen on
+            # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
+            - "-instances=sandbox-mtm:us-central1:vorto3=tcp:5432"
+
+        # [START cloud_sql_proxy_k8s_volume_mount]
+            # This flag specifies where the service account key can be found
+            - "-credential_file=/secrets/service_account.json"
+          securityContext:
+            # The default Cloud SQL proxy image runs as the
+            # "nonroot" user and group (uid: 65532) by default.
+            runAsNonRoot: true
+          volumeMounts:
+          - name: cloudsql-sa-secret-volume
+            mountPath: /secrets/
+            readOnly: true
+            # [END cloud_sql_proxy_k8s_volume_mount]
+        # [START cloud_sql_proxy_k8s_volume_secret]
+        volumes:
+        - name: cloudsql-sa-secret-volume
+          secret:
+            secretName: cloudsql-sa-secret
+        # [START cloud_sql_proxy_k8s_volume_secret]

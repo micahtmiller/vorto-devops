@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sql-proxy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sql-proxy
+    spec:
+      containers:
+       # Make sure to specify image tag in production
+       # Check out the newest version in release page
+       # https://github.com/GoogleCloudPlatform/cloudsql-proxy/releases
+      - name: sql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:latest
+       # 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
+        imagePullPolicy: Always
+        command:
+        - /cloud_sql_proxy
+        - -dir=/cloudsql  
+        - -instances=sandbox-mtm:us-central1:vorto3=tcp:5432
+        - -credential_file=/secrets/cloudsql/service_account.json
+        # set term_timeout if require graceful handling of shutdown
+        # NOTE: proxy will stop accepting new connections; only wait on existing connections
+        - term_timeout=10s
+        lifecycle:
+          preStop:
+            exec:
+              # (optional) add a preStop hook so that termination is delayed
+              # this is required if your server still require new connections (e.g., connection pools)
+              command: ['sleep', '10']
+        ports:
+        - name: cloud-sql-port
+          containerPort: 5432
+        volumeMounts:
+        - mountPath: /cloudsql
+          name: cloudsql
+        - mountPath: /secrets/cloudsql
+          name: cloudsql-sa-secret
+      volumes:
+      - name: cloudsql
+        emptyDir:
+      - name: cloudsql-sa-secret
+        secret:
+          secretName: cloudsql-sa-secret
