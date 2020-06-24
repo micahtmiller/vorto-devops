@@ -16,3 +16,6 @@
 
 *.tfvars
 .terraform/
+
+# Ignore all secrets
+*.secret
