@@ -110,25 +110,31 @@ All of the pieces exists, now we need to make sure it is all automated and works
 ### Gotcha!
 
 **Service Account Issue**
+
 Expected behavior:
 * Connecting to cloud sql instance with service account succeeds
+
 Actual behavior
 * Service account not able to access cloud sql using cloudsql-proxy.
 
 Solution:
 "Create another service account after Enable the Cloud SQL API"
+
 https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/issues/68
 
 -- Ended up just creating a separate service account for Cloud SQL connections
 
 **Cloud SQL not creating**
+
 Expected behavior:
 * When running terraform destroy/apply, the Cloud SQL database should be re-created.
+
 Actual behavior:
 * Database does not get created and TF eventually times out
 
 Solution:
-"It seems we can not reuse the same instance name for up to a week after deleting an instance" 
+"It seems we can not reuse the same instance name for up to a week after deleting an instance"\
+
 https://github.com/terraform-providers/terraform-provider-google/issues/5101
 
 -- Need to modify the instance name to have some unique name each time it is re-run
