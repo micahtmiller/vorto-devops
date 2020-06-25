@@ -1,3 +1,9 @@
+// This is incomplete
+// TODO
+// * Install gcloud in Dockerfile
+// * Copy terraform credentials
+// * Configure gcloud using terraform credentials
+
 {
     "dockerFile": "Dockerfile.terraform",
     "extensions": [ 
