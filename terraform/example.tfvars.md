@@ -1,0 +1,6 @@
+project_id = "sandbox-mtm"
+region = "us-central1"
+compute_engine_service_account = "vorto-kubernetes"
+sql_user = "xxxx"
+sql_pwd = "xxxx"
+db_url = "dbname=public host=localhost user=xxxx password=xxxx port=5432 sslmode=disable"
