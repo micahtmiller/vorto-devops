@@ -93,6 +93,12 @@ Finally, I got around to developing a solution.
     * Query database (done)
     * Map objects for response (done)
 
+
+### Things I could have done better
+
+* Using issues to track stories
+* Branching based on stories
+
 ### Gotcha!
 
 **Service Account Issue**
