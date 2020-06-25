@@ -34,8 +34,8 @@ graph LR
     end
 ```
 
-* Go related details are located [here](./go/README.md)
-* Terraform related details are located [here](./terraform/README.md)
+* `Go` related details are located [here](./go/README.md)
+* `Terraform` related details are located [here](./terraform/README.md)
 
 ### SQL Details
 
