@@ -4,7 +4,7 @@ Terraform is great, except when it's not.  So, I started out trying to use provi
 
 ## Deployment Overview
 
-Everything is deployed/managed by Terraform.  You should be able to re-deploy fairly easily, given you have the correct permissions on the GCP project and APIs enabled.
+Everything is deployed/managed by Terraform.  You should be able to re-deploy fairly easily, given you have the correct permissions on the GCP project and APIs enabled (Kubernetes and Cloud SQL).
 
 Create a `terraform.tfvars` file, then run: 
 
