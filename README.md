@@ -40,7 +40,7 @@ graph LR
 ### SQL Details
 
 ERD to understand interdependencies:
-![img](./img/vorto_coffee_erd.png)
+![img](./doc/vorto_coffee_erd.png)
 
 [Invalid Deliveries SQL File](./manually_deploy/cloudsql/invalid_deliveries.sql)
 
