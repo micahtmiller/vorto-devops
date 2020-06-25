@@ -14,13 +14,14 @@ spec:
        # Check out the newest version in release page
        # https://github.com/GoogleCloudPlatform/cloudsql-proxy/releases
       - name: sql-proxy
-        image: gcr.io/cloudsql-docker/gce-proxy:latest
+        image: gcr.io/cloudsql-docker/gce-proxy:1.16
        # 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
         imagePullPolicy: Always
         command:
         - /cloud_sql_proxy
-        - -dir=/cloudsql  
-        - -instances=sandbox-mtm:us-central1:vorto3=tcp:5432
+        - -dir=/cloudsql
+        - -instances=sandbox-mtm:us-central1:vorto4=tcp:5432
+        # - -instances=sandbox-mtm:us-central1:vorto4=tcp:0.0.0.0:5432
         - -credential_file=/secrets/cloudsql/service_account.json
         # set term_timeout if require graceful handling of shutdown
         # NOTE: proxy will stop accepting new connections; only wait on existing connections

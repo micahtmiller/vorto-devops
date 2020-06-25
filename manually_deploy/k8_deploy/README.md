@@ -28,5 +28,13 @@ docker run -d --rm --name test -p 8080:8080 gcr.io/sandbox-mtm/go_server:latest
 # Configure kubectl for deployed K8 instance
 
 ```
-gcloud container clusters get-credentials deploy-service-cluster --region us-central1
+gcloud container clusters get-credentials vorto-service-cluster --region us-central1
+```
+
+```
+docker run \
+  -v /Users/mmiller18/Documents/Personal/GitHub/vorto-devops/manually_deploy/k8_deploy:/config \
+  -p 127.0.0.1:5432:5432 \
+  gcr.io/cloudsql-docker/gce-proxy:1.16 /cloud_sql_proxy \
+  -instances=sandbox-mtm:us-central1:vorto3=tcp:0.0.0.0:5432 -credential_file=/config/json.secret
 ```

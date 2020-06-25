@@ -1,40 +1,47 @@
-resource "google_sql_database_instance" "master" {
-  name             = var.name
-  project          = var.project
-  database_version = var.database_version
-  region           = var.region
-
-  settings {
-    # Second-generation instance tiers are based on the machine
-    # type. See argument reference below.
-    tier = var.tier
-  }
+# Create a unique instance name
+# Paraphrased from https://github.com/terraform-google-modules/terraform-google-sql-db/blob/master/modules/postgresql/main.tf
+locals {
+  master_instance_name = "${var.name}-${random_id.suffix[0].hex}"
 }
 
-resource "google_sql_database" "database" {
-  project  = var.project
-  name     = "public"
-  instance = google_sql_database_instance.master.name
+resource "random_id" "suffix" {
+  count = 1
+
+  byte_length = 4
 }
 
+# Leverage GCP module to create postgres instance
+# Limitation - SQL instance name needs to be changed every time it is destroyed/recreated
+module "sql-db" {
+  source  = "GoogleCloudPlatform/sql-db/google//modules/postgresql"
+  version = "3.1.0"
+
+  name                 = local.master_instance_name
+#   random_instance_name = true
+  database_version     = var.database_version
+  project_id           = var.project
+  region               = var.region
+  zone                 = "c"
+  tier                 = var.tier
+
+  db_name = "public"
+  user_name = var.sql_user
+  user_password = var.sql_pwd
+}
+
+# Add permissions for Cloud SQL Service Account to pull import file
 resource "google_project_iam_member" "cloudsql_roles" {
+  depends_on = [module.sql-db]
   project = var.project
   role    = "roles/storage.objectViewer"
-  member  = "serviceAccount:${google_sql_database_instance.master.service_account_email_address}"
+  member  = "serviceAccount:${module.sql-db.instance_service_account_email_address}"
 }
 
-resource "google_sql_user" "user" {
-  depends_on = [
-      google_sql_database_instance.master,
-      google_project_iam_member.cloudsql_roles,
-      google_sql_database.database
-      ]
-  project = var.project
-  instance = google_sql_database_instance.master.name
-  name     = var.sql_user
-  password = var.sql_pwd
-
+# Load SQL dump file
+# This needs to wait a bit to let roles propagate
+resource "null_resource" "load_data" {
+  depends_on = [google_project_iam_member.cloudsql_roles]
   provisioner "local-exec" {
-      command = "gcloud sql import sql ${google_sql_database_instance.master.name} gs://vorto-dropbox/coffee.sql --database public --user ${google_sql_user.user.name}"
+      command = "gcloud sql import sql ${module.sql-db.instance_name} gs://vorto-dropbox/coffee.sql --database public --user ${var.sql_user}"
   }
 }

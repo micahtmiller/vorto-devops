@@ -1,19 +1,31 @@
 # Default values for goserver.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+# Bringing in sql sidecar info from https://github.com/helm/charts/blob/master/stable/gcloud-sqlproxy
 
 replicaCount: 1
 
-controller:
-    image:
+image:
     repository: gcr.io/sandbox-mtm/go_server
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v0.1"
+    # tag: "v0.2" # pull from Chart.yaml
 
     imagePullSecrets: []
     nameOverride: ""
     fullnameOverride: ""
+
+env:
+    secretName: goserver-secret
+    secretKey: uri
+
+sqlsidecar:
+    repository: gcr.io/cloudsql-docker/gce-proxy
+    tag: "1.17"
+    sql_connection_name: "sql_connection_name" #inject from TF
+    port: 5432
+    secretName: "cloudsql-sa-secret"
+    secretKey: "service_account.json"
 
 serviceAccount:
   # Specifies whether a service account should be created
