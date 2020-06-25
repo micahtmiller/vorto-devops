@@ -74,18 +74,10 @@ The first day or two, I spent creating "hello, world" versions within each techn
         * Create cluster (done)
         * Deploy helm chart (done)
 
-## Create solution
+# Creating the Go solution
 
 Finally, I got around to developing a solution.
 
-* Create infrastructure
-    * Terraform
-        * K8s (done)
-        * Helm (not complete... stuck on cloud_sql_proxy errors )
-            * cloud_sql_proxy
-            * go_server
-        * Database (done)
-            * Postgres
 * Load data manually to Postgres (done)
 * Explore data and create SQL query (done)
 * Create go program
@@ -93,11 +85,27 @@ Finally, I got around to developing a solution.
     * Query database (done)
     * Map objects for response (done)
 
+## Deploying everything together
+
+All of the pieces exists, now we need to make sure it is all automated and works like we want.
+
+* Create infrastructure
+    * Terraform
+        * K8s (done)
+        * Helm (done)
+            * cloud_sql_proxy
+            * go_server
+        * Database (done)
+            * Postgres
+        * Secrets (done)
+        * Service Accounts (done)
+
 
 ### Things I could have done better
 
 * Using issues to track stories
 * Branching based on stories
+* I'm sure there's a lot more I need to learn!
 
 ### Gotcha!
 
