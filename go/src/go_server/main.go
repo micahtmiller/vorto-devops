@@ -100,6 +100,8 @@ WITH
 		InvalidDeliveryIds: invalidDeliveryIds}
 	jsonData, _ := json.Marshal(resp)
 
+	log.Printf("Invalid Delivery Ids: %v", invalidDeliveryIds)
+
 	return jsonData
 }
 
