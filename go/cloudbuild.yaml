@@ -14,7 +14,7 @@ steps:
       args: ['install', './...']
       env: ['GOPATH=/go']
     - name: 'gcr.io/cloud-builders/go'
-      args: ['test', 'hello']
+      args: ['test', 'go_server']
       env: ['GOPATH=/go']
     # - name: 'gcr.io/cloud-builders/docker'
     #   args: ['build', '--tag=gcr.io/$PROJECT_ID/hello', '.']
