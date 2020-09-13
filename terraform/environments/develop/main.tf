@@ -15,7 +15,7 @@ provider "google" {
 }
 
 module "cloud_sql" {
-    source = "./modules/cloudsql"
+    source = "../../modules/cloudsql"
     project = var.project_id
     name = "vorto4"
     database_version = "POSTGRES_12"
@@ -26,7 +26,7 @@ module "cloud_sql" {
 }
 
 module "gke" {
-    source = "./modules/gke"
+    source = "../../modules/gke"
     cluster_name = "vorto-service-cluster"
     project = var.project_id
     region = var.region
