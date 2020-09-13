@@ -1,11 +1,21 @@
+# steps:
+# - name: 'golang'
+#   args: ['go', 'build', '.']
+#   env: ['GOPATH=/workspace/go/src/go_server']
+# - name: 'golang'
+#   args: ['go', 'test']
+#   env: ['GOPATH=/workspace/go/src/go_server']
+# - name: 'docker'
+#   args: ['build', '-t', 'gcr.io/$PROJECT_ID/go_server', '.']
+#   dir: 'go'
+# images: [gcr.io/$PROJECT_ID/go_server]
 steps:
-- name: 'golang'
-  args: ['go', 'build', '.']
-  env: ['GOPATH=/workspace/go/src/go_server']
-- name: 'golang'
-  args: ['go', 'test']
-  env: ['GOPATH=/workspace/go/src/go_server']
-- name: 'docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/go_server', '.']
-  dir: 'go'
-images: [gcr.io/$PROJECT_ID/go_server]
+    - name: 'gcr.io/cloud-builders/go'
+      args: ['install', '.']
+      env: ['PROJECT_ROOT=go']
+    - name: 'gcr.io/cloud-builders/go'
+      args: ['test', 'hello']
+      env: ['PROJECT_ROOT=go']
+    # - name: 'gcr.io/cloud-builders/docker'
+    #   args: ['build', '--tag=gcr.io/$PROJECT_ID/hello', '.']
+    # images: ['gcr.io/$PROJECT_ID/hello']
