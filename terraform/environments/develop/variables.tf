@@ -47,8 +47,8 @@ variable "compute_engine_service_account" {
   description = "Service account to associate to the nodes in the cluster"
 }
 
-variable "sql_user" {}
+# variable "sql_user" {}
 
-variable "sql_pwd" {}
+# variable "sql_pwd" {}
 
-variable "db_url" {}
+# variable "db_url" {}

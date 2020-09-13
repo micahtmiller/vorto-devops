@@ -20,6 +20,6 @@ variable "tier" {
     type = string
 }
 
-variable "sql_user" {}
+# variable "sql_user" {}
 
-variable "sql_pwd" {}
+# variable "sql_pwd" {}

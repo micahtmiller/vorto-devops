@@ -10,6 +10,18 @@ resource "random_id" "suffix" {
   byte_length = 4
 }
 
+resource "google_secret_manager_secret" "default" {
+    secret_id = "sql_password"
+
+    replication {
+        automatic = true
+    }
+}
+
+resource "google_secret_manager_secret_version" "default" {
+  secret = google_secret_manager_secret.default.id
+}
+
 # Leverage GCP module to create postgres instance
 # Limitation - SQL instance name needs to be changed every time it is destroyed/recreated
 module "sql-db" {
@@ -25,8 +37,8 @@ module "sql-db" {
   tier                 = var.tier
 
   db_name = "public"
-  user_name = var.sql_user
-  user_password = var.sql_pwd
+  user_name = "postgres"
+  user_password = google_secret_manager_secret_version.default.secret_data
 }
 
 # Add permissions for Cloud SQL Service Account to pull import file
@@ -42,6 +54,6 @@ resource "google_project_iam_member" "cloudsql_roles" {
 resource "null_resource" "load_data" {
   depends_on = [google_project_iam_member.cloudsql_roles]
   provisioner "local-exec" {
-      command = "gcloud sql import sql ${module.sql-db.instance_name} gs://vorto-dropbox/coffee.sql --database public --user ${var.sql_user}"
+      command = "gcloud sql import sql ${module.sql-db.instance_name} gs://vorto-dropbox/coffee.sql --database public --user postgres"
   }
 }

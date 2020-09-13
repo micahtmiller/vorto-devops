@@ -13,10 +13,10 @@ variable "region" {
   type        = string
 }
 
-variable "db_url" {
-  description = "Database connection URL to connect to postgres"
-  type        = string
-}
+# variable "db_url" {
+#   description = "Database connection URL to connect to postgres"
+#   type        = string
+# }
 
 variable "k8_sa_name" {
   description = "The name of the custom service account. This parameter is limited to a maximum of 28 characters."

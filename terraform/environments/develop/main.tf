@@ -5,13 +5,18 @@
 # https://github.com/mudrii/gke_sql_terraform/blob/master/infra/gke/main.tf
 
 terraform {
-    required_version = ">= 0.12.24"
+    required_version = ">= 0.12.26"
 }
 
 provider "google" {
-    version = "~> 3.16.0"
+    version = "~> 3.24.0"
     project = var.project_id
     region  = var.region
+}
+
+provider "google-beta" {
+    version = ">= 3.8"
+    project = var.project_id
 }
 
 module "cloud_sql" {
@@ -21,8 +26,8 @@ module "cloud_sql" {
     database_version = "POSTGRES_12"
     region = var.region
     tier = "db-f1-micro"
-    sql_user = var.sql_user
-    sql_pwd = var.sql_pwd
+    # sql_user = var.sql_user
+    # sql_pwd = var.sql_pwd
 }
 
 module "gke" {
@@ -35,5 +40,5 @@ module "gke" {
     proxy_sa_description = "Service Account for Cloud SQL Proxy"
     k8_sa_name = var.compute_engine_service_account
     k8_sa_description = "Service account for K8s VMs"
-    db_url = var.db_url
+    # db_url = var.db_url
 }

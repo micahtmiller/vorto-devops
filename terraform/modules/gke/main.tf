@@ -53,13 +53,23 @@ resource "kubernetes_secret" "cloud_sa_secret" {
   }
 }
 
+# resource "google_cloud_secret_manager_secret_version" "default" {
+#     provider = google-beta
+#     secret = "sql_password"
+#     version = "1"
+# }
+# resource "google_secret_manager_secret_version" "default" {
+#   secret = var.google_secret_id
+# }
+
 resource "kubernetes_secret" "goserver_secret" {
     metadata {
         name = "goserver-secret"
     }
 
     data = {
-        "uri" = var.db_url
+        "uri" = "dbname=public host=localhost user=postgres password=postgres port=5432 sslmode=disable"
+        # "uri" = var.db_url
     }
 }
 
