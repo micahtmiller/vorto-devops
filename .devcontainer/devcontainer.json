@@ -1,30 +1,20 @@
+// This is incomplete
+// TODO
+// * Install gcloud in Dockerfile
+// * Copy terraform credentials
+// * Configure gcloud using terraform credentials
+
 {
-    "name": "Go",
-    "build": {
-		"dockerfile": "Dockerfile.go",
-		// "args": {
-		// 	// Update the VARIANT arg to pick a version of Go: 1, 1.15, 1.14
-		// 	"VARIANT": "1.14",
-		// 	// Options
-		// 	"INSTALL_NODE": "false",
-        //     "NODE_VERSION": "lts/*",
-		// }
-	},
-    "settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash",
-		"go.useGoProxyToCheckForToolUpdates": false,
-		"go.useLanguageServer": true,
-		"go.gopath": "/go",
-		"go.goroot": "/usr/local/go",
-		"go.toolsGopath": "/go/bin"
-	},
-    "forwardPorts": [
-        "8080"
-    ],
+    "name": "Terraform",
+    "dockerFile": "Dockerfile.terraform",
+    "runArgs": [
+        "-v", "/Users/${env:USER}/.config/gcloud:/root/.config/gcloud",
+        "-v", "/Users/${env:USER}/.ssh:/root/.ssh"
+	],
+    // "settings": { 
+	// 	"terminal.integrated.shell.linux": "/bin/bash"
+	// },
     "extensions": [ 
-       "golang.Go"
-    ],
-    "containerEnv": {
-        "DATABASE_URL": "postgres://postgres:postgres@host.docker.internal:5432/public"
-    }
- }
+       "hashicorp.terraform" 
+    ]
+}
