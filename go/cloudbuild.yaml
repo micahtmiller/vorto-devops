@@ -1,11 +1,11 @@
 steps:
 - name: 'golang'
   entrypoint: 'go'
-  args: ['install', 'go_server']
+  args: ['install']
   env: ['GOPATH=/workspace/go/src/go_server']
 - name: 'golang'
   entrypoint: 'go'
-  args: ['test', 'go_server']
+  args: ['test']
   env: ['GOPATH=/workspace/go/src/go_server']
 - name: 'docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/go_server', '.']
