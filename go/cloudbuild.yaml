@@ -10,12 +10,14 @@
 #   dir: 'go'
 # images: [gcr.io/$PROJECT_ID/go_server]
 steps:
-    - name: 'gcr.io/cloud-builders/go'
-      args: ['install', './...']
-      env: ['GOPATH=/go']
-    - name: 'gcr.io/cloud-builders/go'
-      args: ['test', 'go_server']
-      env: ['GOPATH=/go']
-    # - name: 'gcr.io/cloud-builders/docker'
-    #   args: ['build', '--tag=gcr.io/$PROJECT_ID/hello', '.']
-    # images: ['gcr.io/$PROJECT_ID/hello']
+  - name: 'gcr.io/cloud-builders/go'
+    args: ['install', 'go_server']
+    env: ['GOPATH=/go']
+    dir: 'go'
+  - name: 'gcr.io/cloud-builders/go'
+    args: ['test', 'go_server']
+    env: ['GOPATH=/go']
+    dir: 'go'
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '--tag=gcr.io/$PROJECT_ID/hello', '.']
+  # images: ['gcr.io/$PROJECT_ID/hello']
