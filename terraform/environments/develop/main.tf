@@ -22,12 +22,10 @@ provider "google-beta" {
 module "cloud_sql" {
     source = "../../modules/cloudsql"
     project = var.project_id
-    name = "vorto4"
+    name = "vorto"
     database_version = "POSTGRES_12"
     region = var.region
     tier = "db-f1-micro"
-    # sql_user = var.sql_user
-    # sql_pwd = var.sql_pwd
 }
 
 module "gke" {

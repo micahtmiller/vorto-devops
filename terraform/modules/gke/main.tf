@@ -14,7 +14,8 @@ locals {
     "roles/monitoring.metricWriter",
     "roles/monitoring.viewer",
     "roles/stackdriver.resourceMetadata.writer",
-    "roles/storage.objectViewer"
+    "roles/storage.objectViewer",
+    "roles/cloudsql.client"
   ]
 }
 

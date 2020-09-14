@@ -139,3 +139,5 @@ https://github.com/terraform-providers/terraform-provider-google/issues/5101
 
 -- Need to modify the instance name to have some unique name each time it is re-run
 
+**Unable to connect to CloudSQL**
+https://github.com/GoogleCloudPlatform/cloudsql-proxy/issues/9

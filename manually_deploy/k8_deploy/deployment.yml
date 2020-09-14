@@ -31,31 +31,31 @@ spec:
         # Make sure to update on a regular schedule!
           image: gcr.io/cloudsql-docker/gce-proxy:1.17
           command:
-            - "/cloud_sql_proxy"
-
+            - /cloud_sql_proxy
+            - -dir=/cloudsql
             # If connecting from a VPC-native GKE cluster, you can use the
             # following flag to have the proxy connect over private IP
             # - "-ip_address_types=PRIVATE"
 
             # Replace DB_PORT with the port the proxy should listen on
             # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
-            - "-instances=sandbox-mtm:us-central1:vorto4-f75d323e=tcp:0.0.0.0:5432"
-
-        # [START cloud_sql_proxy_k8s_volume_mount]
-            # This flag specifies where the service account key can be found
-            - "-credential_file=/secrets/service_account.json"
-          securityContext:
-            # The default Cloud SQL proxy image runs as the
-            # "nonroot" user and group (uid: 65532) by default.
-            runAsNonRoot: true
+            - -instances=sandbox-mtm:us-central1:vorto4-f75d323e=tcp:0.0.0.0:5432
+            - -credential_file=/secrets/service_account.json
+            - term_timeout=10s
+        lifecycle:
+          preStop:
+            exec:
+              # (optional) add a preStop hook so that termination is delayed
+              # this is required if your server still require new connections (e.g., connection pools)
+              command: ['sleep', '10']
+        ports:
+        - name: cloud-sql-port
+          containerPort: 5432
           volumeMounts:
           - name: cloudsql-sa-secret-volume
             mountPath: /secrets/
             readOnly: true
-            # [END cloud_sql_proxy_k8s_volume_mount]
-        # [START cloud_sql_proxy_k8s_volume_secret]
         volumes:
-        - name: cloudsql-sa-secret-volume
+        - name: cloudsql-sa-secret
           secret:
             secretName: cloudsql-sa-secret
-        # [START cloud_sql_proxy_k8s_volume_secret]
