@@ -1,7 +1,7 @@
 steps:
 - name: 'golang'
-  args: ['go', 'build', 'go_server']
-  env: ['GOPATH=/go', 'GOROOT=./go']
+  args: ['go', 'build', '.']
+  dir: 'go/src/go_server'
 # - name: 'golang'
 #   args: ['go', 'test']
 #   env: ['GOPATH=/workspace/go/src/go_server']
