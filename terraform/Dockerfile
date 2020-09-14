@@ -1,9 +1,9 @@
+# Start from gcloud image
 FROM google/cloud-sdk
 
+# Install dependencies
 RUN apt-get update && \
     apt-get -qqy install curl unzip
-
-# FROM hashicorp/terraform:0.12.26
 
 ARG TERRAFORM_VERSION=0.12.26
 # Install terraform for linux

@@ -109,15 +109,15 @@ resource "google_container_cluster" "primary" {
   }
 }
 
-resource "google_container_node_pool" "primary_preemptible_nodes" {
+resource "google_container_node_pool" "primary_nodes" {
   name       = "service-node-pool"
   location   = "us-central1"
   cluster    = google_container_cluster.primary.name
-  node_count = 1
+  node_count = 3
 
   node_config {
     preemptible  = false
-    machine_type = "e2-standard-4"
+    machine_type = "e2-standard-2"
 
     metadata = {
       disable-legacy-endpoints = "true"
@@ -154,6 +154,18 @@ provider "kubernetes" {
 #         command = "gcloud container clusters get-credentials ${google_container_cluster.primary.name} --region ${var.region}"
 #     }
 # }
+
+provider "helm" {
+  kubernetes {
+    host     = google_container_cluster.primary.endpoint
+    username = "ClusterMaster"
+    password = "MindTheGap"
+
+    client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
+    client_key             = google_container_cluster.primary.master_auth.0.client_key
+    cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
+  }
+}
 
 resource "helm_release" "goserver" {
     # depends_on = [null_resource.kubectl]
