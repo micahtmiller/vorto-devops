@@ -16,9 +16,11 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/terraform-gcloud', '.' ]
+    dir: 'terraform'
 
   - id: 'branch name'
     name: 'alpine'
+    dir: 'terraform'
     entrypoint: 'sh'  
     args: 
     - '-c'
@@ -33,11 +35,11 @@ steps:
     args: 
     - '-c'
     - |
-        if [ -d "terraform/environments/$BRANCH_NAME/" ]; then
-          cd terraform/environments/$BRANCH_NAME
+        if [ -d "environments/$BRANCH_NAME/" ]; then
+          cd environments/$BRANCH_NAME
           terraform init
         else
-          for dir in terraform/environments/*/
+          for dir in environments/*/
           do 
             cd ${dir}   
             env=${dir%*/}
@@ -54,15 +56,16 @@ steps:
   # [START tf-plan]
   - id: 'tf plan'
     name: 'gcr.io/$PROJECT_ID/terraform-gcloud'
+    dir: 'terraform'
     entrypoint: 'sh'
     args: 
     - '-c'
     - | 
-        if [ -d "terraform/environments/$BRANCH_NAME/" ]; then
-          cd terraform/environments/$BRANCH_NAME
+        if [ -d "environments/$BRANCH_NAME/" ]; then
+          cd environments/$BRANCH_NAME
           terraform plan
         else
-          for dir in terraform/environments/*/
+          for dir in environments/*/
           do 
             cd ${dir}   
             env=${dir%*/}
@@ -80,12 +83,13 @@ steps:
   # [START tf-apply]
   - id: 'tf apply'
     name: 'gcr.io/$PROJECT_ID/terraform-gcloud'
+    dir: 'terraform'
     entrypoint: 'sh'
     args: 
     - '-c'
     - | 
-        if [ -d "terraform/environments/$BRANCH_NAME/" ]; then
-          cd terraform/environments/$BRANCH_NAME      
+        if [ -d "environments/$BRANCH_NAME/" ]; then
+          cd environments/$BRANCH_NAME      
           terraform apply -auto-approve
         else
           echo "***************************** SKIPPING APPLYING *******************************"
