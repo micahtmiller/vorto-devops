@@ -22,7 +22,11 @@ kubectl apply -f nginx-deployment.yaml
 ```
 
 ```
-docker run -d --rm --name test -p 8080:8080 gcr.io/sandbox-mtm/go_server:latest
+docker run -d --rm \
+    --name test \
+    -p 8080:8080 \
+    -e DATABASE_URL="dbname=public host=localhost user=postgres password=postgres port=5432 sslmode=disable" \
+    gcr.io/sandbox-mtm/go_server:latest
 ```
 
 # Configure kubectl for deployed K8 instance

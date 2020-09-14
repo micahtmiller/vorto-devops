@@ -14,7 +14,7 @@ spec:
       spec:
         containers:
         - name: goserver
-          image: gcr.io/sandbox-mtm/go_server:v0.2
+          image: gcr.io/sandbox-mtm/go_server:latest
         # This app listens on port 8080 for web traffic by default.
           ports:
           - containerPort: 8080
@@ -39,7 +39,7 @@ spec:
 
             # Replace DB_PORT with the port the proxy should listen on
             # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
-            - "-instances=sandbox-mtm:us-central1:vorto4-c1d2459c=tcp:5432"
+            - "-instances=sandbox-mtm:us-central1:vorto4-f75d323e=tcp:0.0.0.0:5432"
 
         # [START cloud_sql_proxy_k8s_volume_mount]
             # This flag specifies where the service account key can be found

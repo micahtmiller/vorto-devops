@@ -44,14 +44,14 @@ resource "google_service_account_key" "sql_proxy_key" {
   service_account_id = google_service_account.sql_proxy_service_account.name
 }
 
-resource "kubernetes_secret" "cloud_sa_secret" {
-  metadata {
-    name = "cloudsql-sa-secret"
-  }
-  data = {
-    "service_account.json" = base64decode(google_service_account_key.sql_proxy_key.private_key)
-  }
-}
+# resource "kubernetes_secret" "cloud_sa_secret" {
+#   metadata {
+#     name = "cloudsql-sa-secret"
+#   }
+#   data = {
+#     "service_account.json" = base64decode(google_service_account_key.sql_proxy_key.private_key)
+#   }
+# }
 
 # resource "google_cloud_secret_manager_secret_version" "default" {
 #     provider = google-beta
