@@ -44,7 +44,6 @@ ERD to understand interdependencies:
 
 [Invalid Deliveries SQL File](./manually_deploy/cloudsql/invalid_deliveries.sql)
 
-
 # Additional Information
 
 In order to deliver a working solution, I needed to learn/review quite a few technologies just to set up the framework.
@@ -100,6 +99,10 @@ All of the pieces exists, now we need to make sure it is all automated and works
         * Secrets (done)
         * Service Accounts (done)
 
+That data needs to be loaded manually after the CloudSQL instance is created... how should we automate this?
+```sh
+gcloud sql import sql <cloudsql-name> gs://vorto-dropbox/coffee.sql --database public --user postgres
+```
 
 ### Things I could have done better
 
@@ -109,7 +112,7 @@ All of the pieces exists, now we need to make sure it is all automated and works
 
 ### Gotcha!
 
-**Service Account Issue**
+####Service Account Issue
 
 Expected behavior:
 * Connecting to cloud sql instance with service account succeeds
@@ -118,13 +121,11 @@ Actual behavior
 * Service account not able to access cloud sql using cloudsql-proxy.
 
 Solution:
-"Create another service account after Enable the Cloud SQL API"
+* "Create another service account after Enable the Cloud SQL API"
+* Referecne: https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/issues/68
+* I ended up just creating a separate service account for Cloud SQL connections
 
-https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/issues/68
-
--- Ended up just creating a separate service account for Cloud SQL connections
-
-**Cloud SQL not creating**
+####Cloud SQL not creating
 
 Expected behavior:
 * When running terraform destroy/apply, the Cloud SQL database should be re-created.
@@ -133,11 +134,18 @@ Actual behavior:
 * Database does not get created and TF eventually times out
 
 Solution:
-"It seems we can not reuse the same instance name for up to a week after deleting an instance"\
+* Need to modify the instance name to have some unique name each time it is re-run
+* "It seems we can not reuse the same instance name for up to a week after deleting an instance"
+* Reference: https://github.com/terraform-providers/terraform-provider-google/issues/5101
 
-https://github.com/terraform-providers/terraform-provider-google/issues/5101
+####Unable to connect to CloudSQL
 
--- Need to modify the instance name to have some unique name each time it is re-run
+Expected behavior:
+* CloudSQL Proxy deployment connects successfully to CloudSQL instance
 
-**Unable to connect to CloudSQL**
-https://github.com/GoogleCloudPlatform/cloudsql-proxy/issues/9
+Actual behavior:
+* Get "cannot fetch token" error
+
+Solution:
+* Redeploy kubernets cluster
+* Reference: https://github.com/GoogleCloudPlatform/cloudsql-proxy/issues/9
