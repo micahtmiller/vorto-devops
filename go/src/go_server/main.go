@@ -10,6 +10,9 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
+var db *pgxpool.Pool
+
+
 type response struct {
 	InvalidDeliveryIds []int32
 }
@@ -77,19 +80,7 @@ WITH
 		supplier_name
 	having sum(valid_delivery) = 0
 ;`
-	poolConfig, err := pgxpool.ParseConfig(os.Getenv("DATABASE_URL"))
-	if err != nil {
-		log.Fatal(err)
-		os.Exit(1)
-	}
 
-	// poolConfig.ConnConfig.Logger = logger
-	var db *pgxpool.Pool
-	db, err = pgxpool.ConnectConfig(context.Background(), poolConfig)
-	if err != nil {
-		log.Fatal("Unable to create connection pool", "error", err)
-		os.Exit(1)
-	}
 	rows, _ := db.Query(context.Background(), sqlString)
 	type row struct {
 		delivery_id int32
@@ -134,9 +125,22 @@ func urlHandler(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 
+	poolConfig, err := pgxpool.ParseConfig(os.Getenv("DATABASE_URL"))
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+
+	// poolConfig.ConnConfig.Logger = logger
+	db, err = pgxpool.ConnectConfig(context.Background(), poolConfig)
+	if err != nil {
+		log.Fatal("Unable to create connection pool", "error", err)
+		os.Exit(1)
+	}
+
 	http.HandleFunc("/", urlHandler)
 
-	var err error
+	// var err error
 	log.Println("Starting service on localhost:8080")
 	err = http.ListenAndServe(":8080", nil)
 	if err != nil {
