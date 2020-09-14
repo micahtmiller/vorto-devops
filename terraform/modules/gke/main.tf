@@ -159,7 +159,7 @@ resource "helm_release" "goserver" {
     # depends_on = [null_resource.kubectl]
     depends_on = [google_container_cluster.primary]
     name = "go-server"
-    chart = "./helm/goserver"
+    chart = "../../helm/goserver"
 
     set {
         name = "sqlsidecar.sql_connection_name"
