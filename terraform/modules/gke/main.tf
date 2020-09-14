@@ -75,15 +75,6 @@ resource "kubernetes_secret" "goserver_secret" {
 
 # ---- KUBERNETES ----
 
-# provider "kubernetes" {
-#   load_config_file       = false
-#   host                   = module.gke.endpoint
-#   token                  = data.google_client_config.default.access_token
-#   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
-# }
-
-# data "google_client_config" "default" {}
-
 # Create K8s Cluster
 resource "google_container_cluster" "primary" {
   name               = var.cluster_name
@@ -137,15 +128,24 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 
+data "google_client_config" "default" {}
+
 provider "kubernetes" {
-  load_config_file = false
-
-  host     = google_container_cluster.primary.endpoint
-
-  client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
-  client_key             = google_container_cluster.primary.master_auth.0.client_key
-  cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
+  load_config_file       = false
+  host                   = google_container_cluster.primary.endpoint
+  token                  = data.google_client_config.default.access_token
+  cluster_ca_certificate = base64decode(google_container_cluster.primary.master_auth.0.cluster_ca_certificate)
 }
+
+# provider "kubernetes" {
+#   load_config_file = false
+
+#   host     = google_container_cluster.primary.endpoint
+
+#   client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
+#   client_key             = google_container_cluster.primary.master_auth.0.client_key
+#   cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
+# }
 
 # # Makes sure kubectl is configured to the newly created cluster
 # resource "null_resource" "kubectl" {
@@ -155,17 +155,17 @@ provider "kubernetes" {
 #     }
 # }
 
-provider "helm" {
-  kubernetes {
-    host     = google_container_cluster.primary.endpoint
-    username = "ClusterMaster"
-    password = "MindTheGap"
+# provider "helm" {
+#   kubernetes {
+#     host     = google_container_cluster.primary.endpoint
+#     username = "ClusterMaster"
+#     password = "MindTheGap"
 
-    client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
-    client_key             = google_container_cluster.primary.master_auth.0.client_key
-    cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
-  }
-}
+#     client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
+#     client_key             = google_container_cluster.primary.master_auth.0.client_key
+#     cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
+#   }
+# }
 
 resource "helm_release" "goserver" {
     # depends_on = [null_resource.kubectl]
