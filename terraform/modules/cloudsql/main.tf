@@ -18,9 +18,9 @@ resource "google_secret_manager_secret" "default" {
     }
 }
 
-resource "google_secret_manager_secret_version" "default" {
-  secret = google_secret_manager_secret.default.id
-}
+# resource "google_secret_manager_secret_version" "default" {
+#   secret = google_secret_manager_secret.default.id
+# }
 
 # Leverage GCP module to create postgres instance
 # Limitation - SQL instance name needs to be changed every time it is destroyed/recreated
@@ -38,7 +38,8 @@ module "sql-db" {
 
   db_name = "public"
   user_name = "postgres"
-  user_password = google_secret_manager_secret_version.default.secret_data
+  user_name = "postgres"
+#   user_password = google_secret_manager_secret_version.default.secret_data
 }
 
 # Add permissions for Cloud SQL Service Account to pull import file
