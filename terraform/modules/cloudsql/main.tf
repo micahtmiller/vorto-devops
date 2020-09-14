@@ -52,9 +52,9 @@ resource "google_project_iam_member" "cloudsql_roles" {
 
 # Load SQL dump file
 # This needs to wait a bit to let roles propagate
-resource "null_resource" "load_data" {
-  depends_on = [google_project_iam_member.cloudsql_roles]
-  provisioner "local-exec" {
-      command = "gcloud sql import sql ${module.sql-db.instance_name} gs://vorto-dropbox/coffee.sql --database public --user postgres"
-  }
-}
+# resource "null_resource" "load_data" {
+#   depends_on = [google_project_iam_member.cloudsql_roles]
+#   provisioner "local-exec" {
+#       command = "gcloud sql import sql ${module.sql-db.instance_name} gs://vorto-dropbox/coffee.sql --database public --user postgres"
+#   }
+# }
