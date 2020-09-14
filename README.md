@@ -112,7 +112,7 @@ gcloud sql import sql <cloudsql-name> gs://vorto-dropbox/coffee.sql --database p
 
 ### Gotcha!
 
-####Service Account Issue
+#### Service Account Issue
 
 Expected behavior:
 * Connecting to cloud sql instance with service account succeeds
@@ -125,7 +125,7 @@ Solution:
 * Referecne: https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/issues/68
 * I ended up just creating a separate service account for Cloud SQL connections
 
-####Cloud SQL not creating
+#### Cloud SQL not creating
 
 Expected behavior:
 * When running terraform destroy/apply, the Cloud SQL database should be re-created.
@@ -138,7 +138,7 @@ Solution:
 * "It seems we can not reuse the same instance name for up to a week after deleting an instance"
 * Reference: https://github.com/terraform-providers/terraform-provider-google/issues/5101
 
-####Unable to connect to CloudSQL
+#### Unable to connect to CloudSQL
 
 Expected behavior:
 * CloudSQL Proxy deployment connects successfully to CloudSQL instance
