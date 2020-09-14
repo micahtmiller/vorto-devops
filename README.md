@@ -3,7 +3,7 @@
 Here is my solution to the [DevOps Engineering Challenge](https://gist.github.com/VortoEng/53a027df8665b2bcca160b8256393f4f)
 
 The service is exposed (insecurely) :
-http://35.239.75.83/
+http://35.226.36.32
 
 A list of items that should be completed are located in the [TODO.md](./TODO.md)
 
