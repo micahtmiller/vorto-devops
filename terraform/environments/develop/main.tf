@@ -14,10 +14,10 @@ provider "google" {
     region  = var.region
 }
 
-provider "google-beta" {
-    version = ">= 3.8"
-    project = var.project_id
-}
+# provider "google-beta" {
+#     version = ">= 3.8"
+#     project = var.project_id
+# }
 
 module "cloud_sql" {
     source = "../../modules/cloudsql"
@@ -38,5 +38,4 @@ module "gke" {
     proxy_sa_description = "Service Account for Cloud SQL Proxy"
     k8_sa_name = var.compute_engine_service_account
     k8_sa_description = "Service account for K8s VMs"
-    # db_url = var.db_url
 }
