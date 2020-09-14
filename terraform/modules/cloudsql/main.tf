@@ -10,13 +10,13 @@ resource "random_id" "suffix" {
   byte_length = 4
 }
 
-resource "google_secret_manager_secret" "default" {
-    secret_id = "sql_password"
+# resource "google_secret_manager_secret" "default" {
+#     secret_id = "sql_password"
 
-    replication {
-        automatic = true
-    }
-}
+#     replication {
+#         automatic = true
+#     }
+# }
 
 # resource "google_secret_manager_secret_version" "default" {
 #   secret = google_secret_manager_secret.default.id
@@ -55,6 +55,6 @@ resource "google_project_iam_member" "cloudsql_roles" {
 # resource "null_resource" "load_data" {
 #   depends_on = [google_project_iam_member.cloudsql_roles]
 #   provisioner "local-exec" {
-#       command = "gcloud sql import sql ${module.sql-db.instance_name} gs://vorto-dropbox/coffee.sql --database public --user postgres"
+#       command = "gcloud sql import sql sandbox-mtm:us-central1:vorto-1d3e8f91 gs://vorto-dropbox/coffee.sql --database public --user postgres"
 #   }
 # }
