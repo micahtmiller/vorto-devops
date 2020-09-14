@@ -24,8 +24,8 @@ pgadmin4 is the Postgres client that I used for the SQL development
 ```
 docker pull dpage/pgadmin4:latest
 docker run -p 80:80 \
-    -e 'PGADMIN_DEFAULT_EMAIL=xxxx@gmail.com' \
-    -e 'PGADMIN_DEFAULT_PASSWORD=xxxx' \
+    -e 'PGADMIN_DEFAULT_EMAIL=admin@gmail.com' \
+    -e 'PGADMIN_DEFAULT_PASSWORD=admin' \
     -d dpage/pgadmin4
 ```
 
@@ -33,7 +33,7 @@ docker run -p 80:80 \
 
 Open connection to Cloud SQL instance
 ```
-./cloud_sql_proxy -instances=sandbox-mtm:us-central1:vorto3=tcp:5432
+./cloud_sql_proxy -instances=sandbox-mtm:us-central1:vorto4-f75d323e=tcp:5432
 ```
 
 Run using docker
@@ -42,7 +42,7 @@ docker run \
   -v /Users/mmiller18/Documents/Personal/GitHub/vorto-devops/manually_deploy/k8_deploy:/config \
   -p 127.0.0.1:5432:5432 \
   gcr.io/cloudsql-docker/gce-proxy:1.16 /cloud_sql_proxy \
-  -instances=sandbox-mtm:us-central1:vorto3=tcp:0.0.0.0:5432 -credential_file=/config/json.secret
+  -instances=sandbox-mtm:us-central1:vorto4-f75d323e=tcp:0.0.0.0:5432 -credential_file=/config/json.secret
 ```
 
 ## Manual connection test

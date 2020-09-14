@@ -137,24 +137,6 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(google_container_cluster.primary.master_auth.0.cluster_ca_certificate)
 }
 
-# provider "kubernetes" {
-#   load_config_file = false
-
-#   host     = google_container_cluster.primary.endpoint
-
-#   client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
-#   client_key             = google_container_cluster.primary.master_auth.0.client_key
-#   cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
-# }
-
-# # Makes sure kubectl is configured to the newly created cluster
-# resource "null_resource" "kubectl" {
-#     depends_on = [google_container_cluster.primary]
-#     provisioner "local-exec" {
-#         command = "gcloud container clusters get-credentials ${google_container_cluster.primary.name} --region ${var.region}"
-#     }
-# }
-
 provider "helm" {
   kubernetes {
     load_config_file       = false
@@ -165,7 +147,6 @@ provider "helm" {
 }
 
 resource "helm_release" "goserver" {
-    # depends_on = [null_resource.kubectl]
     depends_on = [google_container_cluster.primary]
     name = "go-server"
     chart = "../../helm/goserver"
