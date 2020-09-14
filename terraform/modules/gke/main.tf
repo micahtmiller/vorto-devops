@@ -68,7 +68,7 @@ resource "kubernetes_secret" "goserver_secret" {
     }
 
     data = {
-        "uri" = "dbname=public host=host.docker.internal user=postgres password=postgres port=5432 sslmode=disable"
+        "uri" = "dbname=public host=localhost user=postgres password=postgres port=5432 sslmode=disable"
         # "uri" = var.db_url
     }
 }
