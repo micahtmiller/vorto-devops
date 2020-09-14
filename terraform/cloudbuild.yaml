@@ -17,7 +17,7 @@ steps:
 
   - id: 'branch name'
     name: 'hashicorp/terraform:0.12.26'
-    entrypoint: 'bash'  
+    entrypoint: 'sh'  
     args: 
     - '-c'
     - | 
@@ -28,7 +28,7 @@ steps:
   - id: 'tf init'
     name: 'hashicorp/terraform:0.12.26'
     dir: 'terraform'
-    entrypoint: 'bash'
+    entrypoint: 'sh'
     args: 
     - '-c'
     - |
@@ -54,7 +54,7 @@ steps:
   - id: 'tf plan'
     name: 'hashicorp/terraform:0.12.26'
     dir: 'terraform'
-    entrypoint: 'bash'
+    entrypoint: 'sh'
     args: 
     - '-c'
     - | 
@@ -81,7 +81,7 @@ steps:
   - id: 'tf apply'
     name: 'hashicorp/terraform:0.12.26'
     dir: 'terraform'
-    entrypoint: 'bash'
+    entrypoint: 'sh'
     args: 
     - '-c'
     - | 
