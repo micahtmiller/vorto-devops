@@ -19,9 +19,8 @@ steps:
     dir: 'terraform'
 
   - id: 'branch name'
-    name: 'alpine'
-    dir: 'terraform'
-    entrypoint: 'sh'  
+    name: 'gcr.io/$PROJECT_ID/terraform-gcloud'
+    entrypoint: 'bash'  
     args: 
     - '-c'
     - | 
@@ -31,7 +30,8 @@ steps:
   
   - id: 'tf init'
     name: 'gcr.io/$PROJECT_ID/terraform-gcloud'
-    entrypoint: 'sh'
+    dir: 'terraform'
+    entrypoint: 'bash'
     args: 
     - '-c'
     - |
@@ -57,7 +57,7 @@ steps:
   - id: 'tf plan'
     name: 'gcr.io/$PROJECT_ID/terraform-gcloud'
     dir: 'terraform'
-    entrypoint: 'sh'
+    entrypoint: 'bash'
     args: 
     - '-c'
     - | 
@@ -84,7 +84,7 @@ steps:
   - id: 'tf apply'
     name: 'gcr.io/$PROJECT_ID/terraform-gcloud'
     dir: 'terraform'
-    entrypoint: 'sh'
+    entrypoint: 'bash'
     args: 
     - '-c'
     - | 
