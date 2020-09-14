@@ -38,7 +38,7 @@ module "sql-db" {
 
   db_name = "public"
   user_name = "postgres"
-  user_name = "postgres"
+  user_password = "postgres"
 #   user_password = google_secret_manager_secret_version.default.secret_data
 }
 
